@@ -20,4 +20,5 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^keycloak/', include('django_keycloak.urls')),
+    url(r'^login/', include('loginApp.urls')),
 ]
