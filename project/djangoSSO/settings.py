@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'loginApp'
+    'loginApp',
+    'django_keycloak.apps.KeycloakAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_keycloak.middleware.BaseKeycloakMiddleware',
+    'django_keycloak.middleware.RemoteUserAuthenticationMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'django_keycloak.auth.backends.KeycloakAuthorizationCodeBackend',
 ]
 
 ROOT_URLCONF = 'djangoSSO.urls'
@@ -119,3 +127,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+KEYCLOAK_OIDC_PROFILE_MODEL = 'django_keycloak.RemoteUserOpenIdConnectProfile'
