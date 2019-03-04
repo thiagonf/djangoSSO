@@ -21,8 +21,8 @@
                 </div>
                 {% if user.is_authenticated %}
                 <p class="navbar-text navbar-right">
-                    Signed in as {{ user.get_full_name }}
-                    {% if user.oidc_profile %}| <a href="{{ user.oidc_profile.realm.server.url }}/auth/realms/{{ user.oidc_profile.realm.name }}/account/">Manage Profile</a>{% endif %}
+                    Usuário {{ user.get_full_name }}
+                    {% if user.oidc_profile %}| <a href="{{ user.oidc_profile.realm.server.url }}/auth/realms/{{ user.oidc_profile.realm.name }}/account/">Configurações</a>{% endif %}
                     | <a href="{% url 'keycloak_logout' %}">Logout</a>
                 </p>
                 {% else %}

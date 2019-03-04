@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin
 )
 from django.views.generic.base import TemplateView
+from django.http import HttpResponseRedirect
 from jose.exceptions import JWTError
 
 import django_keycloak.services.oidc_profile
@@ -18,19 +19,19 @@ import django_keycloak.services.remote_client
 
 logger = logging.getLogger(__name__)
 
+class Index(LoginRequiredMixin, TemplateView):
+    template_name = 'home.html'
+    login_url = '/login'
 
 class Login(TemplateView):
     template_name = 'home.html'
 
     def get_context_data(self, **kwargs):
-        print(self.request.user)
         context = super().get_context_data(**kwargs)
         jwt = self.get_decoded_jwt()
-        print(jwt)
         
         if jwt is not None:
             jwt=json.dumps(jwt, sort_keys=True, indent=4, separators=(',', ': '))
-            print(jwt)
         else:
             jwt = ""
 

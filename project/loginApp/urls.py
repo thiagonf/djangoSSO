@@ -20,6 +20,6 @@ from loginApp import views
 
 
 urlpatterns = [
-    url(r'^$', views.Login.as_view(), name='index'),
+    url(r'^$', views.Login.as_view(), name='login'),
     url(r'^permission$', views.Permission.as_view(), name='permission'),
 ]
