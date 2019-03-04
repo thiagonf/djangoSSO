@@ -19,10 +19,40 @@ import django_keycloak.services.remote_client
 logger = logging.getLogger(__name__)
 
 
-class Home(TemplateView):
+class Login(TemplateView):
     template_name = 'home.html'
 
-class Permission(PermissionRequiredMixin, TemplateView):
+    def get_context_data(self, **kwargs):
+        print(self.request.user)
+        context = super().get_context_data(**kwargs)
+        jwt = self.get_decoded_jwt()
+        print(jwt)
+        
+        if jwt is not None:
+            jwt=json.dumps(jwt, sort_keys=True, indent=4, separators=(',', ': '))
+            print(jwt)
+        else:
+            jwt = ""
+
+        context['jwt'] = jwt
+        return context  
+    
+    def get_decoded_jwt(self):
+        if not hasattr(self.request.user, 'oidc_profile'):
+            return None
+
+        oidc_profile = self.request.user.oidc_profile
+        client = oidc_profile.realm.client
+
+        return client.openid_api_client.decode_token(
+            token=oidc_profile.access_token,
+            key=client.realm.certs,
+            algorithms=client.openid_api_client.well_known[
+                'id_token_signing_alg_values_supported']
+        )
+
+
+class Permission(LoginRequiredMixin, TemplateView):
     raise_exception = True
     template_name = 'permission.html'
     permission_required = 'some-permission'
