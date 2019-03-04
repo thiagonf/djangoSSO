@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = 'keycloak_login'
+LOGOUT_REDIRECT_URL = 'keycloak_login'
+
 
 # Application definition
 
@@ -37,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'loginApp',
+    'loginApp.apps.LoginappConfig',
     'django_keycloak.apps.KeycloakAppConfig',
 ]
 
@@ -49,9 +52,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
     'django_keycloak.middleware.BaseKeycloakMiddleware',
     'django_keycloak.middleware.RemoteUserAuthenticationMiddleware',
 ]
+
+PASSWORD_HASHERS = [
+    'django_keycloak.hashers.PBKDF2SHA512PasswordHasher',
+]
+
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -108,6 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+KEYCLOAK_OIDC_PROFILE_MODEL = 'django_keycloak.OpenIdConnectProfile'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -128,4 +138,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-KEYCLOAK_OIDC_PROFILE_MODEL = 'django_keycloak.RemoteUserOpenIdConnectProfile'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    }
+}
