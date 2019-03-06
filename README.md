@@ -11,7 +11,7 @@ docker run --name keycloak -p 8080:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSW
 ```
 3. Configure Keycloak server
 
-    See how to configuration Keycloak server on wiki [Keyclaok Configuration]()
+    See how to configuration Keycloak server on wiki [Keyclaok Configuration](https://github.com/thiagonf/djangoSSO/wiki/Keycloak-Server)
 
 4. Install requeriments
 ```
@@ -20,7 +20,7 @@ pip install -r requirements.txt
 
 5. Configuration Django-Keycloak
 
-    See how to configuration Django-Keycloak lib on wiki [Django-Keyclaok Configuration](#)
+    See how to configuration Django-Keycloak lib on wiki [Django-Keyclaok Configuration](https://github.com/thiagonf/djangoSSO/wiki/Django-Keycloak)
 
 6. Run migrations Django
 ```console
