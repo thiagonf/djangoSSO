@@ -2,7 +2,7 @@ certifi==2018.11.29
 chardet==3.0.4
 Django==2.1.7
 django-keycloak==0.1.2.dev0
-ecdsa==0.13
+ecdsa==0.13.3
 future==0.17.1
 idna==2.8
 pyasn1==0.4.5
